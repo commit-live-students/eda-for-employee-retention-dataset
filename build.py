@@ -1,22 +1,40 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
 def get_categorical_variables(df):
-    return []
+    return df[['dept','join_date','quit_date']]
 
 
 def get_numerical_variables(df):
-    return []
+    return df.drop(['dept','join_date','quit_date'], axis=1)
 
 
 def get_numerical_variables_percentile(df):
-    pass
+    return pd.concat([df.describe(), pd.DataFrame(df.median().rename('median')).T], axis=0)
 
 
 def get_categorical_variables_modes(df):
-    pass
+    cat_df = get_categorical_variables(df)
+    return cat_df.mode()
 
 
 def get_missing_values_count(df):
-    pass
+    return pd.DataFrame(pd.isnull(df).sum().rename('NA_count'))
 
 
 def plot_histogram_with_numerical_values(df):
-    pass
+    num_df = get_numerical_variables(df)
+    plt.subplot(221)
+    plt.title(num_df.columns[0])
+    sns.distplot(num_df.iloc[:,0], color='yellow', fit=norm, kde=False)
+    plt.subplot(222)
+    plt.title(num_df.columns[1])
+    sns.distplot(num_df.iloc[:,1], color='yellow', fit=norm, kde=False)
+    plt.subplot(223)
+    plt.title(num_df.columns[2])
+    sns.distplot(num_df.iloc[:,2], color='yellow', fit=norm, kde=False)
+    plt.subplot(224)
+    plt.title(num_df.columns[3])
+    sns.distplot(num_df.iloc[:,3], color='yellow', fit=norm, kde=False)
