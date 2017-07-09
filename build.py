@@ -1,3 +1,6 @@
+import pandas as pd
+df = pd.read_csv('data/employee_retention_data.csv')
+
 def get_categorical_variables(df):
     return df.select_dtypes(include=['object']).columns
 
