@@ -1,22 +1,21 @@
 def get_categorical_variables(df):
-    return []
-
+    return df.select_dtypes(include=['object']).columns
 
 def get_numerical_variables(df):
-    return []
+    return df.select_dtypes(exclude=['object']).columns
 
 
 def get_numerical_variables_percentile(df):
-    pass
+    return df.select_dtypes(exclude=['object']).describe()
 
 
 def get_categorical_variables_modes(df):
-    pass
+    return df.select_dtypes(include=['object']).mode()
 
 
 def get_missing_values_count(df):
-    pass
+    return df.isnull()
 
 
 def plot_histogram_with_numerical_values(df):
-    pass
+    return df.plot.hist(bins=20)
